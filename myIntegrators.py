@@ -33,10 +33,10 @@ def RK4(t, f, y0, args=()):
         h = t[i + 1] - t[i]
         yi = np.squeeze(y[:, i])
         k1 = f(t[i], yi, *args)
-        k2 = f(t[i] + h / 2., yi + k1 * h / 2., *args)
-        k3 = f(t[i] + h / 2., yi + k2 * h / 2., *args)
+        k2 = f(t[i] + h / 2.0, yi + k1 * h / 2.0, *args)
+        k3 = f(t[i] + h / 2.0, yi + k2 * h / 2.0, *args)
         k4 = f(t[i] + h, yi + k3 * h, *args)
-        y[:, i + 1] = yi + (h / 6.) * (k1 + 2 * k2 + 2 * k3 + k4)
+        y[:, i + 1] = yi + (h / 6.0) * (k1 + 2 * k2 + 2 * k3 + k4)
     return y
 
 
@@ -75,10 +75,16 @@ def RK8(t, f, y0, args=()):
         k_6 = f(t[i] + h * (2 / 3), yi + (h / 54) * (13 * k_1 - 27 * k_3 + 42 * k_4 + 8 * k_5))
         k_7 = f(t[i] + h * (1 / 6), yi + (h / 4320) * (389 * k_1 - 54 * k_3 + 966 * k_4 - 824 * k_5 + 243 * k_6))
         k_8 = f(t[i] + h, yi + (h / 20) * (-234 * k_1 + 81 * k_3 - 1164 * k_4 + 656 * k_5 - 122 * k_6 + 800 * k_7))
-        k_9 = f(t[i] + h * (5 / 6),
-                yi + (h / 288) * (-127 * k_1 + 18 * k_3 - 678 * k_4 + 456 * k_5 - 9 * k_6 + 576 * k_7 + 4 * k_8))
-        k_10 = f(t[i] + h, yi + (h / 820) * (
-                1481 * k_1 - 81 * k_3 + 7104 * k_4 - 3376 * k_5 + 72 * k_6 - 5040 * k_7 - 60 * k_8 + 720 * k_9))
+        k_9 = f(
+            t[i] + h * (5 / 6),
+            yi + (h / 288) * (-127 * k_1 + 18 * k_3 - 678 * k_4 + 456 * k_5 - 9 * k_6 + 576 * k_7 + 4 * k_8),
+        )
+        k_10 = f(
+            t[i] + h,
+            yi
+            + (h / 820)
+            * (1481 * k_1 - 81 * k_3 + 7104 * k_4 - 3376 * k_5 + 72 * k_6 - 5040 * k_7 - 60 * k_8 + 720 * k_9),
+        )
         yii = yi + h / 840 * (41 * k_1 + 27 * k_4 + 272 * k_5 + 27 * k_6 + 216 * k_7 + 216 * k_9 + 41 * k_10)
         y[:, i + 1] = yii
     return y
@@ -143,7 +149,7 @@ def IRK(t, f, y0, order: int = 4):
             # print("Fty", Fty, "G", G, "DeltaY", DeltaY, "err", err)
             # print(err)
             if err != err:
-                raise ValueError('Newton Algorithm diverged with irk')
+                raise ValueError("Newton Algorithm diverged with irk")
             ct = ct + 1
             # if ct > 10:
             #     print("node",ii)
@@ -153,7 +159,7 @@ def IRK(t, f, y0, order: int = 4):
         print(ii)
         yii = yi + h * np.matmul(np.kron(b.T, np.eye(N)), Fty)
         if yii[0].item() == np.nan:
-            print('nan')
+            print("nan")
         y[:, ii + 1] = np.squeeze(yii)
 
     return y
@@ -186,9 +192,13 @@ def GLD(order):
         c = np.array([[1 / 2 - np.sqrt(3) / 6], [1 / 2 + np.sqrt(3) / 6]])
         s = 2
     elif order == 6:
-        A = np.array([[5 / 36, 2 / 9 - np.sqrt(15) / 15, 5 / 36 - np.sqrt(15) / 30],
-                      [5 / 36 + np.sqrt(15) / 24, 2 / 9, 5 / 36 - np.sqrt(15) / 24],
-                      [5 / 36 + np.sqrt(15) / 30, 2 / 9 + np.sqrt(15) / 15, 5 / 36]])
+        A = np.array(
+            [
+                [5 / 36, 2 / 9 - np.sqrt(15) / 15, 5 / 36 - np.sqrt(15) / 30],
+                [5 / 36 + np.sqrt(15) / 24, 2 / 9, 5 / 36 - np.sqrt(15) / 24],
+                [5 / 36 + np.sqrt(15) / 30, 2 / 9 + np.sqrt(15) / 15, 5 / 36],
+            ]
+        )
         b = np.array([[5 / 18], [4 / 9], [5 / 18]])
         c = np.array([[1 / 2 - np.sqrt(15) / 10], [1 / 2], [1 / 2 + np.sqrt(15) / 10]])
         s = 3
