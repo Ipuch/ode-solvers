@@ -2,6 +2,7 @@
 Implementation of numerical integration methods of ordinary differential equations
 Pierre Puchaud
 """
+from typing import Callable
 import numpy as np
 from numpy import linalg as la
 
@@ -196,13 +197,13 @@ def GLD(order):
     return A, b, c, s
 
 
-def jacobian(func, x, delta=1e-3):
+def jacobian(func: Callable, x, delta=1e-3):
     """
     Numerical jacobian of a function
 
     Parameters
     ----------
-    func : function
+    func : Callable
         function to be differentiated
     x : array_like
         input vector
