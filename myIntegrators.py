@@ -132,10 +132,9 @@ def IRK(t, f, y0, order: int = 4):
         Jinv = -la.inv(J)
         err = 1
         ct = 1
-        if ii == 12:
-            print("hey")
+
         while err > tol:
-            # F(tt, Y)
+
             Fty = np.array([])
             for i_s in range(s):
                 fty = f(tt + c[i_s] * h, np.squeeze(Y[range(0 + N * i_s, N * (1 + i_s))]))
