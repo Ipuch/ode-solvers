@@ -92,7 +92,7 @@ def RK8(t, f, y0, args=()):
 
 def IRK(t, f, y0, order: int = 4):
     """
-    Implicit Runge-Kutta method
+    Implicit Runge-Kutta method with Gauss-Legendre coefficients for IRK method
 
     Parameters
     ----------
