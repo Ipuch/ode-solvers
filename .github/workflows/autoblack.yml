@@ -9,16 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - name: Set up Python 3.10
-        uses: actions/setup-python@v1
-        with:
-          python-version: '3.10'
       - uses: conda-incubator/setup-miniconda@v2
-        name: Set up Conda
+        name: Set up Conda with python 3.10
         with:
           miniconda-version: "latest"
           channels: conda-forge
+          activate-environment: black
+          python-version: 3.10
       - name: Install Black
         run: conda install -c conda-forge black
       - name: Run black --check .
