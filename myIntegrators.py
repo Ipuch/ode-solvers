@@ -146,8 +146,7 @@ def IRK(t, f, y0, order: int = 4):
             DeltaY = np.matmul(Jinv, G)
             Y = Y + DeltaY
             err = la.norm(DeltaY)
-            # print("Fty", Fty, "G", G, "DeltaY", DeltaY, "err", err)
-            # print(err)
+
             if err != err:
                 raise ValueError("Newton Algorithm diverged with irk")
             ct = ct + 1
