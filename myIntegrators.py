@@ -72,9 +72,18 @@ def RK8(t, f, y0, args=()):
         k_3 = f(t[i] + h * (2 / 9), yi + (h / 18) * (k_1 + 3 * k_2))
         k_4 = f(t[i] + h * (1 / 3), yi + (h / 12) * (k_1 + 3 * k_3))
         k_5 = f(t[i] + h * (1 / 2), yi + (h / 8) * (k_1 + 3 * k_4))
-        k_6 = f(t[i] + h * (2 / 3), yi + (h / 54) * (13 * k_1 - 27 * k_3 + 42 * k_4 + 8 * k_5))
-        k_7 = f(t[i] + h * (1 / 6), yi + (h / 4320) * (389 * k_1 - 54 * k_3 + 966 * k_4 - 824 * k_5 + 243 * k_6))
-        k_8 = f(t[i] + h, yi + (h / 20) * (-234 * k_1 + 81 * k_3 - 1164 * k_4 + 656 * k_5 - 122 * k_6 + 800 * k_7))
+        k_6 = f(
+            t[i] + h * (2 / 3),
+            yi + (h / 54) * (13 * k_1 - 27 * k_3 + 42 * k_4 + 8 * k_5),
+        )
+        k_7 = f(
+            t[i] + h * (1 / 6),
+            yi + (h / 4320) * (389 * k_1 - 54 * k_3 + 966 * k_4 - 824 * k_5 + 243 * k_6),
+        )
+        k_8 = f(
+            t[i] + h,
+            yi + (h / 20) * (-234 * k_1 + 81 * k_3 - 1164 * k_4 + 656 * k_5 - 122 * k_6 + 800 * k_7),
+        )
         k_9 = f(
             t[i] + h * (5 / 6),
             yi + (h / 288) * (-127 * k_1 + 18 * k_3 - 678 * k_4 + 456 * k_5 - 9 * k_6 + 576 * k_7 + 4 * k_8),
@@ -92,7 +101,7 @@ def RK8(t, f, y0, args=()):
 
 def IRK(t, f, y0, order: int = 4):
     """
-    Implicit Runge-Kutta method
+    Implicit Runge-Kutta method with Gauss-Legendre coefficients for IRK method
 
     Parameters
     ----------
@@ -132,10 +141,9 @@ def IRK(t, f, y0, order: int = 4):
         Jinv = -la.inv(J)
         err = 1
         ct = 1
-        if ii == 12:
-            print("hey")
+
         while err > tol:
-            # F(tt, Y)
+
             Fty = np.array([])
             for i_s in range(s):
                 fty = f(tt + c[i_s] * h, np.squeeze(Y[range(0 + N * i_s, N * (1 + i_s))]))
@@ -146,15 +154,10 @@ def IRK(t, f, y0, order: int = 4):
             DeltaY = np.matmul(Jinv, G)
             Y = Y + DeltaY
             err = la.norm(DeltaY)
-            # print("Fty", Fty, "G", G, "DeltaY", DeltaY, "err", err)
-            # print(err)
+
             if err != err:
                 raise ValueError("Newton Algorithm diverged with irk")
             ct = ct + 1
-            # if ct > 10:
-            #     print("node",ii)
-            #     print("error DeltaY", err)
-            #     break
         # update
         print(ii)
         yii = yi + h * np.matmul(np.kron(b.T, np.eye(N)), Fty)
@@ -165,9 +168,9 @@ def IRK(t, f, y0, order: int = 4):
     return y
 
 
-def GLD(order):
+def GLD(order) -> tuple:
     """
-    Gauss-Legendre coefficients for IRK method
+    Gauss-Legendre coefficients for IRK method coming from the butcher tableau
 
     Parameters
     ----------
@@ -207,9 +210,9 @@ def GLD(order):
     return A, b, c, s
 
 
-def jacobian(func: Callable, x, delta=1e-3):
+def jacobian(func: Callable, x, delta: float = 1e-3):
     """
-    Numerical jacobian of a function
+    Numerical jacobian of a function evaluated at x
 
     Parameters
     ----------
