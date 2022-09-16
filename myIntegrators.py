@@ -203,7 +203,7 @@ def GLD(order):
 
 def jacobian(func: Callable, x, delta=1e-3):
     """
-    Numerical jacobian of a function
+    Numerical jacobian of a function evaluated at x
 
     Parameters
     ----------
