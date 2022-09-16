@@ -149,9 +149,6 @@ def IRK(t, f, y0, order: int = 4):
             if err != err:
                 raise ValueError("Newton Algorithm diverged with irk")
             ct = ct + 1
-            # if ct > 10:
-            #     print("error DeltaY", err)
-            #     break
         # update
         print(ii)
         yii = yi + h * np.matmul(np.kron(b.T, np.eye(N)), Fty)
