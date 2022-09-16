@@ -159,7 +159,7 @@ def IRK(t, f, y0, order: int = 4):
     return y
 
 
-def GLD(order):
+def GLD(order) -> tuple:
     """
     Gauss-Legendre coefficients for IRK method coming from the butcher tableau
 
