@@ -150,7 +150,6 @@ def IRK(t, f, y0, order: int = 4):
                 raise ValueError("Newton Algorithm diverged with irk")
             ct = ct + 1
             # if ct > 10:
-            #     print("node",ii)
             #     print("error DeltaY", err)
             #     break
         # update
