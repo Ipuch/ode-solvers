@@ -12,9 +12,8 @@ jobs:
       - uses: s-weigand/setup-conda@v1
       - name: Install Conda
         with:
-          miniconda-version: "latest"
-          channels: conda-forge
-          python-version: 3.10
+          channels: 'conda-forge'
+          python-version: '3.10'
       - run: conda --version
       - name: Install Black
         run: conda install -c conda-forge black
