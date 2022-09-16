@@ -4,22 +4,22 @@
 # https://github.com/cclauss/autoblack
 
 name: autoblack
-on:
-  push:
-  pull_request:
-      branches:
-        - master
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: s-weigand/setup-conda@v1
-      - name: Install Conda
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v1
         with:
-          channels: 'conda-forge'
           python-version: '3.10'
-      - run: conda --version
+      - uses: conda-incubator/setup-miniconda@v2
+        name: Set up Conda
+        with:
+          miniconda-version: "latest"
+          channels: 'conda-forge'
       - name: Install Black
         run: conda install -c conda-forge black
       - name: Run black --check .
-        run: black . --check
+        run: black . --exclude "external/*" --check
