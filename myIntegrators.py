@@ -161,7 +161,7 @@ def IRK(t, f, y0, order: int = 4):
 
 def GLD(order):
     """
-    Gauss-Legendre coefficients for IRK method
+    Gauss-Legendre coefficients for IRK method coming from the butcher tableau
 
     Parameters
     ----------
