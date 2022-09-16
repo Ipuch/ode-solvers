@@ -201,7 +201,7 @@ def GLD(order):
     return A, b, c, s
 
 
-def jacobian(func: Callable, x, delta=1e-3):
+def jacobian(func: Callable, x, delta: float = 1e-3):
     """
     Numerical jacobian of a function evaluated at x
 
