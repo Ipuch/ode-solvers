@@ -180,7 +180,7 @@ def GLD(order) -> tuple:
         number of stages
 
     """
-    if order == 4:
+    if order== 4:
         A = np.array([[1 / 4, 1 / 4 - np.sqrt(3) / 6], [1 / 4 + np.sqrt(3) / 6, 1 / 4]])
         b = np.array([[1 / 2], [1 / 2]])
         c = np.array([[1 / 2 - np.sqrt(3) / 6], [1 / 2 + np.sqrt(3) / 6]])
