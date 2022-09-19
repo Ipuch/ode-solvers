@@ -7,7 +7,7 @@ import numpy as np
 from numpy import linalg as la
 
 
-def RK4(t, f, y0, args=()):
+def RK4(t, f: Callable, y0: np.ndarray, args=()):
     """
     Runge-Kutta 4th order method
 
@@ -15,9 +15,9 @@ def RK4(t, f, y0, args=()):
     ----------
     t : array_like
         time steps
-    f : function
-        function to be integrated
-    y0 : array_like
+    f : Callable
+        function to be integrated in the form f(t, y, *args)
+    y0 : np.ndarray
         initial conditions of states
 
     Returns
